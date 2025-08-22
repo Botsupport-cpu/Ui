@@ -78,10 +78,9 @@ if not _G.DeutschesMenu then
         end)
     end
 
-    -- 5. Knife FE Executor (Aktualisiert)
+    -- 5. Knife FE Executor
     local function knifeFEAusfuehren()
         pcall(function()
-            -- Knife FE v4 von rawscripts.net
             loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-Grab-knife-v4-24753", true))()
             game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents.SayMessageRequest:FireServer(
                 "✅ Knife FE v4 ausgeführt", 
@@ -90,7 +89,19 @@ if not _G.DeutschesMenu then
         end)
     end
 
-    -- ========== DEUTSCHES MENÜ ========== --
+    -- 6. Mobile Keyboard Executor (NEU)
+    local function mobileKeyboardAusfuehren()
+        pcall(function()
+            -- Mobile Keyboard von GitHub
+            loadstring(game:HttpGet("https://raw.githubusercontent.com/advxzivhsjjdhxhsidifvsh/mobkeyboard/main/main.txt", true))()
+            game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents.SayMessageRequest:FireServer(
+                "✅ Mobile Keyboard aktiviert", 
+                "All"
+            )
+        end)
+    end
+
+    -- ========== ERWEITERTES DEUTSCHES MENÜ ========== --
     
     local function erstelleMenu()
         if game:GetService("CoreGui"):FindFirstChild("DeutschesHackMenu") then
@@ -104,8 +115,8 @@ if not _G.DeutschesMenu then
 
         local HauptFrame = Instance.new("Frame")
         HauptFrame.Name = "HauptFrame"
-        HauptFrame.Size = UDim2.new(0.4, 0, 0.6, 0)
-        HauptFrame.Position = UDim2.new(0.02, 0, 0.2, 0)
+        HauptFrame.Size = UDim2.new(0.45, 0, 0.7, 0)
+        HauptFrame.Position = UDim2.new(0.02, 0, 0.15, 0)
         HauptFrame.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
         HauptFrame.BorderColor3 = Color3.fromRGB(255, 200, 0)
         HauptFrame.BorderSizePixel = 2
@@ -113,7 +124,7 @@ if not _G.DeutschesMenu then
         HauptFrame.Parent = ScreenGui
 
         local Titel = Instance.new("TextLabel")
-        Titel.Size = UDim2.new(1, 0, 0.08, 0)
+        Titel.Size = UDim2.new(1, 0, 0.07, 0)
         Titel.Text = "🔧 DEUTSCHES HACK MENÜ"
         Titel.TextColor3 = Color3.fromRGB(255, 200, 0)
         Titel.BackgroundTransparency = 1
@@ -121,45 +132,46 @@ if not _G.DeutschesMenu then
         Titel.TextSize = 16
         Titel.Parent = HauptFrame
 
-        -- Menüknöpfe mit aktualisierter Knife FE Funktion
+        -- Menüknöpfe mit neuer Mobile Keyboard Funktion
         local knoepfe = {
-            {Text = "🎨 DECAL SPAM", Pos = 0.09, Color = Color3.fromRGB(0, 150, 255), Func = decalSpam},
-            {Text = "🌌 HIMMEL ERSETZEN", Pos = 0.18, Color = Color3.fromRGB(100, 0, 200), Func = himmelErsetzen},
-            {Text = "⚡ CADUCUS FE", Pos = 0.27, Color = Color3.fromRGB(139, 0, 139), Func = caducusAusfuehren},
-            {Text = "🔪 KNIFE FE v4", Pos = 0.36, Color = Color3.fromRGB(200, 0, 0), Func = knifeFEAusfuehren},
-            {Text = "🔓 BACKDOOR EXECUTOR", Pos = 0.45, Color = Color3.fromRGB(0, 100, 0), Func = backdoorAusfuehren}
+            {Text = "🎨 DECAL SPAM", Pos = 0.08, Color = Color3.fromRGB(0, 150, 255), Func = decalSpam},
+            {Text = "🌌 HIMMEL ERSETZEN", Pos = 0.16, Color = Color3.fromRGB(100, 0, 200), Func = himmelErsetzen},
+            {Text = "⚡ CADUCUS FE", Pos = 0.24, Color = Color3.fromRGB(139, 0, 139), Func = caducusAusfuehren},
+            {Text = "🔪 KNIFE FE v4", Pos = 0.32, Color = Color3.fromRGB(200, 0, 0), Func = knifeFEAusfuehren},
+            {Text = "🔓 BACKDOOR EXECUTOR", Pos = 0.40, Color = Color3.fromRGB(0, 100, 0), Func = backdoorAusfuehren},
+            {Text = "📱 MOBILE KEYBOARD", Pos = 0.48, Color = Color3.fromRGB(150, 0, 150), Func = mobileKeyboardAusfuehren}
         }
 
         for _, knopf in ipairs(knoepfe) do
             local button = Instance.new("TextButton")
-            button.Size = UDim2.new(0.9, 0, 0.14, 0)
+            button.Size = UDim2.new(0.9, 0, 0.12, 0)
             button.Position = UDim2.new(0.05, 0, knopf.Pos, 0)
             button.Text = knopf.Text
             button.BackgroundColor3 = knopf.Color
             button.TextColor3 = Color3.fromRGB(255, 255, 255)
             button.Font = Enum.Font.SourceSansBold
-            button.TextSize = 12
+            button.TextSize = 11
             button.BorderSizePixel = 1
             button.BorderColor3 = Color3.fromRGB(50, 50, 50)
             button.Parent = HauptFrame
             button.MouseButton1Click:Connect(knopf.Func)
         end
 
-        -- Info Text
+        -- Info Text mit allen Funktionen
         local InfoText = Instance.new("TextLabel")
         InfoText.Size = UDim2.new(0.9, 0, 0.25, 0)
         InfoText.Position = UDim2.new(0.05, 0, 0.62, 0)
-        InfoText.Text = "📋 FUNKTIONEN:\n• Decal Spam System\n• Himmel Textur Wechsel\n• Caducus FE Bypass\n• Knife FE v4 Script\n• Backdoor Executor\n\nTexture ID: " .. targetTextureID
+        InfoText.Text = "📋 FUNKTIONEN:\n• Decal Spam System\n• Himmel Textur Wechsel\n• Caducus FE Bypass\n• Knife FE v4 Script\n• Backdoor Executor\n• Mobile Keyboard\n\nTexture ID: " .. targetTextureID
         InfoText.TextColor3 = Color3.fromRGB(200, 200, 100)
         InfoText.BackgroundTransparency = 1
         InfoText.Font = Enum.Font.SourceSans
-        InfoText.TextSize = 11
+        InfoText.TextSize = 10
         InfoText.TextXAlignment = Enum.TextXAlignment.Left
         InfoText.Parent = HauptFrame
 
         -- Schließen Knopf
         local SchliessenKnopf = Instance.new("TextButton")
-        SchliessenKnopf.Size = UDim2.new(0.12, 0, 0.08, 0)
+        SchliessenKnopf.Size = UDim2.new(0.12, 0, 0.07, 0)
         SchliessenKnopf.Position = UDim2.new(0.84, 0, 0.005, 0)
         SchliessenKnopf.Text = "X"
         SchliessenKnopf.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
