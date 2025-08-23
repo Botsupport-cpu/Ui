@@ -94,7 +94,69 @@ if not _G.EnglishMenu then
         end)
     end
 
-    -- ========== КАСТОМНОЕ МЕНЮ С ВСЕМИ ФУНКЦИЯМИ ========== --
+    -- 11. TEAM SPAM FUNCTION (20 СООБЩЕНИЙ) --
+    local function spamTeam()
+        pcall(function()
+            for i = 1, 20 do
+                game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents.SayMessageRequest:FireServer(
+                    "TEAM This0neKid Join today! [" .. i .. "/20]", "All"
+                )
+                wait(0.5)
+            end
+        end)
+    end
+
+    -- 12. BAN ALL FUNCTION (УЛУЧШЕННАЯ) --
+    local function banAll()
+        pcall(function()
+            local localPlayer = game:GetService("Players").LocalPlayer
+            local deleted = 0
+            
+            -- Удаляем все объекты других игроков в Workspace
+            for _, obj in ipairs(workspace:GetDescendants()) do
+                if obj:IsA("BasePart") or obj:IsA("Model") or obj:IsA("Accessory") then
+                    -- Проверяем, что объект не принадлежит локальному игроку
+                    if obj:FindFirstAncestorOfClass("Model") then
+                        local player = game:GetService("Players"):GetPlayerFromCharacter(obj:FindFirstAncestorOfClass("Model"))
+                        if player and player ~= localPlayer then
+                            pcall(function()
+                                obj:Destroy()
+                                deleted += 1
+                            end)
+                        end
+                    end
+                end
+            end
+            
+            -- Удаляем инструменты в Backpack других игроков
+            for _, player in ipairs(game:GetService("Players"):GetPlayers()) do
+                if player ~= localPlayer then
+                    -- Удаляем leaderstats игрока
+                    if player:FindFirstChild("leaderstats") then
+                        player.leaderstats:Destroy()
+                        deleted += 1
+                    end
+                    
+                    -- Удаляем Backpack
+                    if player:FindFirstChild("Backpack") then
+                        for _, tool in ipairs(player.Backpack:GetDescendants()) do
+                            pcall(function()
+                                tool:Destroy()
+                                deleted += 1
+                            end)
+                        end
+                    end
+                end
+            end
+            
+            -- Сообщение о результате
+            game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents.SayMessageRequest:FireServer(
+                "✅ BAN ALL: Deleted " .. deleted .. " objects from other players", "All"
+            )
+        end)
+    end
+
+    -- ========== УВЕЛИЧЕННОЕ МЕНЮ С BAN ALL ========== --
     
     local function createFullMenu()
         if game:GetService("CoreGui"):FindFirstChild("FullHackMenu") then
@@ -108,10 +170,11 @@ if not _G.EnglishMenu then
 
         local MainFrame = Instance.new("Frame")
         MainFrame.Name = "MainFrame"
-        MainFrame.Size = UDim2.new(0.4, 0, 0.7, 0)
-        MainFrame.Position = UDim2.new(0.01, 0, 0.15, 0)
+        MainFrame.Size = UDim2.new(0.5, 0, 0.9, 0) -- Увеличено
+        MainFrame.Position = UDim2.new(0.01, 0, 0.05, 0) -- Сдвинуто выше
         MainFrame.BackgroundColor3 = Color3.fromRGB(15, 15, 15)
-        MainFrame.BorderSizePixel = 0
+        MainFrame.BorderSizePixel = 2
+        MainFrame.BorderColor3 = Color3.fromRGB(255, 200, 0)
         MainFrame.Active = true
         MainFrame.Parent = ScreenGui
 
@@ -123,24 +186,24 @@ if not _G.EnglishMenu then
         menuBackground.Parent = MainFrame
 
         local Title = Instance.new("TextLabel")
-        Title.Size = UDim2.new(1, 0, 0.07, 0)
-        Title.Text = "🔥 FULL FE MENU"
+        Title.Size = UDim2.new(1, 0, 0.05, 0)
+        Title.Text = "🔥 FULL FE MENU v3"
         Title.TextColor3 = Color3.fromRGB(255, 255, 0)
         Title.BackgroundTransparency = 1
         Title.Font = Enum.Font.GothamBold
-        Title.TextSize = 14
+        Title.TextSize = 18 -- Увеличено
         Title.Parent = MainFrame
 
         -- ScrollFrame для всех кнопок
         local ScrollFrame = Instance.new("ScrollingFrame")
-        ScrollFrame.Size = UDim2.new(0.9, 0, 0.85, 0)
-        ScrollFrame.Position = UDim2.new(0.05, 0, 0.1, 0)
-        ScrollFrame.CanvasSize = UDim2.new(0, 0, 2.5, 0)
-        ScrollFrame.ScrollBarThickness = 4
+        ScrollFrame.Size = UDim2.new(0.95, 0, 0.85, 0) -- Увеличено
+        ScrollFrame.Position = UDim2.new(0.025, 0, 0.08, 0) -- Сдвинуто ниже
+        ScrollFrame.CanvasSize = UDim2.new(0, 0, 3.5, 0) -- Увеличено для всех кнопок
+        ScrollFrame.ScrollBarThickness = 8 -- Увеличено
         ScrollFrame.BackgroundTransparency = 1
         ScrollFrame.Parent = MainFrame
 
-        -- ВСЕ КНОПКИ
+        -- ВСЕ КНОПКИ (С ДОБАВЛЕННОЙ BAN ALL)
         local buttons = {
             {Text = "💀 FE GONER", Color = Color3.fromRGB(255, 50, 50), Func = executeFEGoner},
             {Text = "📱 MOBILE KEYBOARD", Color = Color3.fromRGB(100, 200, 255), Func = executeMobileKeyboard},
@@ -151,13 +214,15 @@ if not _G.EnglishMenu then
             {Text = "⚡ CADUCUS FE", Color = Color3.fromRGB(139, 0, 139), Func = executeCaducusFE},
             {Text = "🔫 AK47 FE", Color = Color3.fromRGB(150, 0, 0), Func = executeAK47FE},
             {Text = "💃 FE ANIMATIONS", Color = Color3.fromRGB(255, 100, 0), Func = executeFEAnimations},
-            {Text = "🕵️ LALOL HUB", Color = Color3.fromRGB(0, 100, 255), Func = executeLALOLHub}
+            {Text = "🕵️ LALOL HUB", Color = Color3.fromRGB(0, 100, 255), Func = executeLALOLHub},
+            {Text = "📢 SPAM TEAM (x20)", Color = Color3.fromRGB(0, 200, 0), Func = spamTeam},
+            {Text = "⛔ BAN ALL", Color = Color3.fromRGB(200, 0, 0), Func = banAll}
         }
 
         for i, btn in ipairs(buttons) do
             local buttonFrame = Instance.new("Frame")
-            buttonFrame.Size = UDim2.new(1, 0, 0.1, 0)
-            buttonFrame.Position = UDim2.new(0, 0, (i-1)*0.12, 0)
+            buttonFrame.Size = UDim2.new(1, 0, 0.08, 0) -- Уменьшено для большего количества
+            buttonFrame.Position = UDim2.new(0, 0, (i-1)*0.09, 0) -- Уменьшено расстояние
             buttonFrame.BackgroundTransparency = 1
             buttonFrame.Parent = ScrollFrame
 
@@ -168,7 +233,7 @@ if not _G.EnglishMenu then
             button.BackgroundColor3 = btn.Color
             button.TextColor3 = Color3.fromRGB(255, 255, 255)
             button.Font = Enum.Font.GothamBold
-            button.TextSize = 11
+            button.TextSize = 14 -- Увеличено
             button.BorderSizePixel = 0
             button.Parent = buttonFrame
             button.MouseButton1Click:Connect(btn.Func)
@@ -187,15 +252,27 @@ if not _G.EnglishMenu then
             end)
         end
 
+        -- ИНФО ТЕКСТ
+        local infoText = Instance.new("TextLabel")
+        infoText.Size = UDim2.new(0.9, 0, 0.25, 0)
+        infoText.Position = UDim2.new(0.05, 0, 1.35, 0)
+        infoText.Text = "⚠️ WARNING:\n• BAN ALL: Deletes other players' objects and leaderstats\n• Use only in private servers\n• May cause detection"
+        infoText.TextColor3 = Color3.fromRGB(255, 100, 100)
+        infoText.BackgroundTransparency = 1
+        infoText.Font = Enum.Font.Gotham
+        infoText.TextSize = 11 -- Увеличено
+        infoText.TextXAlignment = Enum.TextXAlignment.Left
+        infoText.Parent = ScrollFrame
+
         -- Кнопка закрытия
         local CloseButton = Instance.new("TextButton")
-        CloseButton.Size = UDim2.new(0.15, 0, 0.06, 0)
-        CloseButton.Position = UDim2.new(0.8, 0, 0.02, 0)
-        CloseButton.Text = "X"
+        CloseButton.Size = UDim2.new(0.2, 0, 0.07, 0) -- Увеличено
+        CloseButton.Position = UDim2.new(0.7, 0, 0.01, 0) -- Сдвинуто
+        CloseButton.Text = "❌ CLOSE"
         CloseButton.BackgroundColor3 = Color3.fromRGB(255, 50, 50)
         CloseButton.TextColor3 = Color3.fromRGB(255, 255, 255)
         CloseButton.Font = Enum.Font.GothamBold
-        CloseButton.TextSize = 12
+        CloseButton.TextSize = 14 -- Увеличено
         CloseButton.BorderSizePixel = 0
         CloseButton.Parent = MainFrame
         CloseButton.MouseButton1Click:Connect(function()
